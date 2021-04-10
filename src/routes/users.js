@@ -15,27 +15,31 @@ router.post('/', async (req, res) => {
   newUser.email = email
   newUser.password = newUser.encryptPassword(password)
   newUser.name = name.toUpperCase()
-  newUser.money = 1000
+  newUser.money = 15000
   await newUser.save()
   res.json(newUser);
 });
 
 // Editar Usuario
-router.post('/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   const { email, password, name, money } = req.body;    
-  const user = await User.findOneAndUpdate(
-    {
-      id: req.params.id // filtro
+  const newUser = new User()
+  const user = await User.findByIdAndUpdate(    
+    req.params.id, // filtro
+    {      
+      $set: { // datos a actualizar    
+        email: email,
+        name: name.toUpperCase(),
+        password: newUser.encryptPassword(password),
+        money: money
+      }
     },
     {
-      // datos a actualizar
-      email: email,
-      name: name,
-      money: money
+      upsert: true
     }
     );
-  await user.save()
-  res.json(user);
+    const userUpdated = await User.findById(req.params.id);
+    res.json(userUpdated); 
 });
 
 // Eliminar Usuario

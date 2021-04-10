@@ -17,6 +17,7 @@ app.use(cors())
 // rutas
 app.use('/', require('./routes/index'))
 app.use('/api/users', require('./routes/users'));
+app.use('/api/ruleta', require('./routes/ruleta'));
 
 // servidor
 app.listen(app.get('port'), () => {
