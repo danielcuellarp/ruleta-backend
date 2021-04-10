@@ -4,9 +4,10 @@ const User = require('../models/user');
 const ruleta = require('../services/ruleta');
 
 // Crear Apuesta
-router.get('/', async (req, res) => {
-  const { color, dinero, id } = req.body;
-  const resApuesta = await ruleta.apuesta(color, dinero, id);
+router.post('/', async (req, res) => {
+  console.log(req.body)
+  const { color, money, usuario } = req.body;
+  const resApuesta = await ruleta.apuesta(color, money, usuario);
   res.json(resApuesta);
 });
 

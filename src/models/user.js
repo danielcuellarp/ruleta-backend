@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const bcyrpt = require('bcrypt-nodejs');
+var uniqueValidator = require('mongoose-unique-validator');
 const { Schema } = mongoose
 
 // Definicion 
 const userSchema = new Schema({
-  email: String,
+  email: {type: String, unique: true},
   password: String,
   name: String,
   money: Number
@@ -20,5 +21,10 @@ userSchema.methods.encryptPassword = (password) => {
 userSchema.methods.comparePassword = function (password) {
   return bcyrpt.compareSync(password, this.password);
 }
+
+userSchema.plugin(uniqueValidator, {
+  code: 409,
+  message: 'Ya existe un usuario con este correo.'
+});
 
 module.exports = mongoose.model('users', userSchema);

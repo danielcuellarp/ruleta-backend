@@ -10,14 +10,21 @@ router.get('/', async (req, res) => {
 
 // Guardar Usuario
 router.post('/', async (req, res) => {
-  const { email, password, name, money } = req.body;    
-  const newUser = new User()
-  newUser.email = email
-  newUser.password = newUser.encryptPassword(password)
-  newUser.name = name.toUpperCase()
-  newUser.money = 15000
-  await newUser.save()
-  res.json(newUser);
+  try{
+    const { email, password, name } = req.body   
+    const newUser = new User()
+    newUser.email = email
+    newUser.password = newUser.encryptPassword(password)
+    newUser.name = name.toUpperCase()
+    newUser.money = 15000 
+    
+      await newUser.save()
+      console.log("guardo")
+      res.json(newUser)
+    } catch(err){
+      console.log("error")
+      res.json({})
+    }
 });
 
 // Editar Usuario
