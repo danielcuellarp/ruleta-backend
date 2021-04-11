@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 // Editar Usuario
 router.put('/:id', async (req, res) => {
-  const { email, password, name, money } = req.body;    
+  const { email, name, money } = req.body;    
   const newUser = new User()
   const user = await User.findByIdAndUpdate(    
     req.params.id, // filtro
@@ -37,7 +37,6 @@ router.put('/:id', async (req, res) => {
       $set: { // datos a actualizar    
         email: email,
         name: name.toUpperCase(),
-        password: newUser.encryptPassword(password),
         money: money
       }
     },
