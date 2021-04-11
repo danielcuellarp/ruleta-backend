@@ -7,9 +7,13 @@ Entorno: NodeJs
 https://ruleta-danielcuellarp.herokuapp.com
 # _endpoints_
 /users (get, post)
+
 /users/id (get, put, delete)
+
 /users/login (post)
+
 /ruleta (get)
+
 # _configuracion proyecto_
 variables de entorno:
  - MONGODB_URI
